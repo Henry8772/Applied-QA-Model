@@ -15,31 +15,8 @@ sys.stdout.reconfigure(encoding='utf-8')
 contentsByPage = {}
 
 
-def get_pdf_file_content(path_to_pdf):
-    resource_manager = PDFResourceManager(caching=True)
-
-    out_text = StringIO()
-
-    laParams = LAParams()
-    text_converter = TextConverter(resource_manager, out_text, laparams=laParams)
-    fp = open(path_to_pdf, 'rb')
-
-    interpreter = PDFPageInterpreter(resource_manager, text_converter)
-
-    for page in PDFPage.get_pages(fp, pagenos=set(), maxpages=0, password="", caching=True, check_extractable=True):
-        interpreter.process_page(page)
-
-    text = out_text.getvalue()
-
-    fp.close()
-    text_converter.close()
-    out_text.close()
-
-    return text
-
-
 def processContent(content):
-    replaceDict = {r'(\n+)': ' ', r'\ﬁ': 'fi', r'\ﬃ': 'ffi'}
+    replaceDict = {r'(\n+)': ' ', r'\ﬁ': 'fi', r'\ﬃ': 'ffi', r'IADS\u2013 .* \u2013 .*': ''}
     for k, v in replaceDict.items():
         content = re.sub(k, v, content)
     return content
@@ -50,10 +27,9 @@ def readPerPage(path_to_pdf):
     fp = open(path_to_pdf, 'rb')
     rsrcmgr = PDFResourceManager()
     retstr = io.StringIO()
-    print(type(retstr))
     codec = 'utf-8'
     laparams = LAParams()
-    device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
+    device = TextConverter(rsrcmgr, retstr, laparams=laparams)
     interpreter = PDFPageInterpreter(rsrcmgr, device)
 
     page_no = 0
@@ -62,8 +38,6 @@ def readPerPage(path_to_pdf):
             interpreter.process_page(page)
 
             data = processContent(retstr.getvalue())[:-1]
-
-            # print(data.encode('utf-8'))
             contentsByPage[pageNumber] = data
             retstr.truncate(0)
             retstr.seek(0)
@@ -81,6 +55,9 @@ def saveAsJSON():
     with open("sample.json", "w") as outfile:
         outfile.write(json_object)
 
+
+readPerPage('assets/test.pdf')
+saveAsJSON()
 #
 # readPerPage('test.pdf')
 # print(" ".join(contentsByPage))
