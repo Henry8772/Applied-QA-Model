@@ -39,7 +39,10 @@ def get_pdf_file_content(path_to_pdf):
 
 
 def processContent(content):
-    return re.sub(r'(\n+)', ' ', content)
+    replaceDict = {r'(\n+)': ' ', r'\ﬁ': 'fi', r'\ﬃ': 'ffi'}
+    for k, v in replaceDict.items():
+        content = re.sub(k, v, content)
+    return content
 
 
 def readPerPage(path_to_pdf):
@@ -55,7 +58,7 @@ def readPerPage(path_to_pdf):
 
     page_no = 0
     for pageNumber, page in enumerate(PDFPage.get_pages(fp)):
-        if pageNumber == page_no and pageNumber == 2:
+        if pageNumber == page_no and pageNumber != 0:
             interpreter.process_page(page)
 
             data = processContent(retstr.getvalue())[:-1]
