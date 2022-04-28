@@ -3,7 +3,6 @@ import os
 from ExtractAnswer import ExtractAnswer
 from PassageRetriever import *
 from QueryProcessor import QueryProcessor
-from PdfExtractor import *
 import spacy
 from flask import Flask, render_template, jsonify, request
 
@@ -11,7 +10,7 @@ SPACY_MODEL = os.environ.get('SPACY_MODEL', 'en_core_web_sm')
 # QA_MODEL = os.environ.get('QA_MODEL', 'distilbert-base-cased-distilled-squad')
 nlp = spacy.load(SPACY_MODEL, disable=['ner', 'parser', 'textcat'])
 query_processor = QueryProcessor(nlp)
-passage_retriever = PassageRetriever()
+passage_retriever = PassageRetriever(nlp)
 answer_extractor = ExtractAnswer()
 app = Flask(__name__)
 
@@ -32,10 +31,16 @@ def analyzer():
     # query = query_processor.generate_query(question)
 
     documents = readAsJSON()
-    passages = passage_retriever.findPassage(documents, question)
+    passage_retriever.fit(documents)
+    passages = passage_retriever.most_similar(question)
+    # passages = passage_retriever.findPassage(documents, question)
     answers = answer_extractor.extract(question, passages)
 
     return jsonify(answers)
+
+
+
+
 
 
 if __name__ == '__main__':
