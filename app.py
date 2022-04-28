@@ -3,7 +3,7 @@ import os
 from ExtractAnswer import ExtractAnswer
 from PassageRetriever import *
 from QueryProcessor import QueryProcessor
-from pdfExtractor import *
+from PdfExtractor import *
 import spacy
 from flask import Flask, render_template, jsonify, request
 
