@@ -14,10 +14,13 @@ class ExtractAnswer:
     def extract(self, question, passages):
         answers = []
         for passage in passages:
+            content = passage['content']
             try:
-                answer = self.nlp(question=question, context=passage)
-                answer['text'] = passage
+                answer = self.nlp(question=question, context=content)
+                answer['text'] = content
+                answer['lecture'] = passage['lecture'] + " " + passage['page']
                 answers.append(answer)
+
             except KeyError:
                 pass
         answers.sort(key=operator.itemgetter('score'), reverse=True)

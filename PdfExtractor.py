@@ -20,11 +20,10 @@ class PdfExtractor:
 
     def __init__(self, root_dir=None):
         self.contentsByPage = {}
-        self.root_dir = root_dir or 'assets\ppt\sem1'
+        self.root_dir = root_dir or 'assets/RAA'
         self.file_paths = []
         self.title = ""
         self.lecture_num = ""
-
 
 
     def readPerPage(self, path_to_pdf):
@@ -38,6 +37,7 @@ class PdfExtractor:
         interpreter = PDFPageInterpreter(rsrcmgr, device)
 
         page_no = 0
+        content = {}
         for pageNumber, page in enumerate(PDFPage.get_pages(fp)):
             interpreter.process_page(page)
             if pageNumber == page_no and pageNumber == 0:
@@ -48,7 +48,13 @@ class PdfExtractor:
                 print("Reading page", pageNumber)
 
                 data = self.processContent(retstr.getvalue())[:-1]
-                self.contentsByPage[self.lecture_num + "_" + str(pageNumber)] = data
+                content['content'] = data
+                content['lecture'] = self.title
+                content['page'] = str(page_no)
+                self.contentsByPage[self.lecture_num + "_" + str(pageNumber)] = content
+                content = {}
+
+
             retstr.truncate(0)
             retstr.seek(0)
 
@@ -56,12 +62,17 @@ class PdfExtractor:
         print("Finished")
 
     def processContent(self, content):
-        replaceDict = {r'(\n+)': ' ', r'\ﬁ': 'fi', r'\ﬃ': 'ffi', r'IADS\u2013 .* \u2013 .*': ''}
+        #For RAA
+        # content = "\n\n".join(content.split("\n\n")[3:])
+        replaceDict = {r'\ﬁ': 'fi', r'\ﬃ': 'ffi', r'IADS\u2013 .* \u2013 .*': ''}
+
+        # r'(\n+)': ':',
         for k, v in replaceDict.items():
             content = re.sub(k, v, content)
         return content
 
     def process_front_page(self, content):
+        # m = re.search('\nLecture(.+?)\n\n', content)
         m = re.search('\nLecture(.+?)\n', content)
         if m:
             self.title = m.group(1)
@@ -69,14 +80,15 @@ class PdfExtractor:
         else:
             self.title, self.lecture_num = "empty", "empty"
 
-
     def loop_through_all_files(self):
 
         for subdir, dirs, files in os.walk(self.root_dir):
+
             for file in files:
                 self.file_paths.append(os.path.join(subdir, file))
 
     def read_all_files(self):
+        print("Reading all files", self.file_paths)
         for path in self.file_paths:
             self.readPerPage(path)
 
@@ -91,7 +103,7 @@ class PdfExtractor:
 
 
 pdfExtractor = PdfExtractor()
-# pdfExtractor.readPerPage("assets\ppt\sem1\IADS_11_heaps.pdf")
+# pdfExtractor.readPerPage('assets\RAA\17a.pdf')
 
 pdfExtractor.loop_through_all_files()
 pdfExtractor.read_all_files()

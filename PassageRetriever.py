@@ -26,7 +26,7 @@ class PassageRetriever:
 
     def fit(self, docs):
         # passages = list(itertools.chain(*map(self.preprocess, docs)))
-        corpus = [self.tokenize(p) for p in docs.values()]
+        corpus = [self.tokenize(p['content']) for p in docs.values()]
         self.bm25 = BM25(corpus)
         self.passages = docs
 
@@ -36,10 +36,6 @@ class PassageRetriever:
         indices = argsort(scores)[-topn:]
         doc_key = list(self.passages)
         related_passage = [self.passages[doc_key[i]] for i in indices]
-
-        # pairs = [(s, i) for i, s in enumerate(scores)]
-        # pairs.sort(reverse=True)
-        # passages = [self.passages[i] for _, i in pairs[:topn]]
         return related_passage
 
     # def findPassage(self, documents, question):

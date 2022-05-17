@@ -15,9 +15,6 @@ answer_extractor = ExtractAnswer()
 app = Flask(__name__)
 
 
-
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -37,10 +34,6 @@ def analyzer():
     answers = answer_extractor.extract(question, passages)
 
     return jsonify(answers)
-
-
-
-
 
 
 if __name__ == '__main__':
