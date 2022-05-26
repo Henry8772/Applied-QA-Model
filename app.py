@@ -1,8 +1,8 @@
 import os
 
-from ExtractAnswer import ExtractAnswer
-from PassageRetriever import *
-from QueryProcessor import QueryProcessor
+from components.ExtractAnswer import ExtractAnswer
+from components.PassageRetriever import *
+from components.QueryProcessor import QueryProcessor
 import spacy
 from flask import Flask, render_template, jsonify, request
 
@@ -11,7 +11,7 @@ SPACY_MODEL = os.environ.get('SPACY_MODEL', 'en_core_web_sm')
 nlp = spacy.load(SPACY_MODEL, disable=['ner', 'parser', 'textcat'])
 query_processor = QueryProcessor(nlp)
 passage_retriever = PassageRetriever(nlp)
-answer_extractor = ExtractAnswer()
+answer_extractor = ExtractAnswer("deepset/roberta-base-squad2")
 app = Flask(__name__)
 
 

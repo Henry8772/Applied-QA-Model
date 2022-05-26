@@ -2,7 +2,7 @@ import os
 
 import spacy
 
-from PassageRetriever import PassageRetriever, readAsJSON
+from components.PassageRetriever import PassageRetriever, readAsJSON
 
 SPACY_MODEL = os.environ.get('SPACY_MODEL', 'en_core_web_sm')
 # QA_MODEL = os.environ.get('QA_MODEL', 'distilbert-base-cased-distilled-squad')

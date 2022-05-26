@@ -1,0 +1,50 @@
+{
+    "Dealing with high dimensions - PCA_0": {
+        "content": "The challenge of visualisation We can see a lot in the paired correlation plots. With 4 independent\nvariables, the visualisation works, but what about if we had 26 variables? The Scottish Index\nof Multiple Deprivation (SIMD, Table 1) records 26 variables for each of 6527 data zones in\nScotland. A 26×26 grid of scatter plots is going to be difficult to read.",
+        "lecture": "Dealing with high dimensions - PCA",
+        "page": "0"
+    },
+    "Dealing with high dimensions - PCA_1": {
+        "content": "The challenges of high dimensions In the multiple regression topic, in the student grade prediction\nexample, we were beginning to see two challenges of dealing with more than one independent variable:",
+        "lecture": "Dealing with high dimensions - PCA",
+        "page": "1"
+    },
+    "Dealing with high dimensions - PCA_2": {
+        "content": "The challenge of interpretation In the grades example, the test grades (independent variables) were\ncorrelated, which made the interpretation of the regression coefficients challenging – and this\nwas with only 4 independent variables. In the SIMD example, we might expect many of the 26 variables to be correlated, e.g. the time it takes to drive to the nearest primary school and the\ntime it takes to drive to the nearest secondary school.",
+        "lecture": "Dealing with high dimensions - PCA",
+        "page": "2"
+    },
+    "Dealing with high dimensions - PCA_3": {
+        "content": "There is also another problem with high-dimensional data, called the curse of dimensionality: essentially a large number of dimensions makes is harder for distance-based methods such as clustering\nand nearest neighbours to work effectively – we’ll come back to the curse of dimensionality in the\nfollowing lectures on clustering and nearest-neighbour methods.",
+        "lecture": "Dealing with high dimensions - PCA",
+        "page": "3"
+    },
+
+    "Dealing with high dimensions \u2013 PCA_4": {
+        "content": "In dimensionality reduction methods these challenges are addressed by reducing the number of\ndimensions in the data while retaining as much useful information as possible. There are a number of\ndimensionality reduction methods which differ in what aspects of the data they preserve.",
+        "lecture": "Dealing with high dimensions \u2013 PCA",
+        "page": "4"
+    },
+    "Dealing with high dimensions \u2013 PCA_5": {
+        "content": "Principal components analysis We are going to discuss one method of dimensionality reduction\ncalled principal components analysis (PCA).",
+        "lecture": "Dealing with high dimensions \u2013 PCA",
+        "page": "5"
+    },
+    "Dealing with high dimensions \u2013 PCA_6": {
+        "content": "PCA can be applied to a set of D numeric variables with n datapoints. In contrast to linear regression,\nall variables are treated equally: there is no dependent variable that we are trying to predict, just a set\nof variables whose structure we’re trying to understand better. The result of PCA is a set of up to D\nnew variables (with n datapoints). We can keep k ≤ D of the most informative new variables",
+        "lecture": "Dealing with high dimensions \u2013 PCA",
+        "page": "6"
+    },
+    "Dealing with high dimensions \u2013 PCA_7": {
+        "content": "In PCA the objectives are:\n1. change the angle we view the data from to see things clearly\n2. ignore small details in the data that don’t affect the big picture.",
+        "lecture": "Dealing with high dimensions \u2013 PCA",
+        "page": "7"
+    },
+    "Dealing with high dimensions \u2013 PCA_8": {
+        "content": "We’ll specify these objectives more precisely and explain how PCA works later. First, we will show\nthe results when PCA is applied to the SIMD example (Table 1).",
+        "lecture": "Dealing with high dimensions \u2013 PCA",
+        "page": "8"
+    }
+}
+
+
