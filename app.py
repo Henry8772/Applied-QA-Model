@@ -14,6 +14,11 @@ passage_retriever = PassageRetriever(nlp)
 answer_extractor = ExtractAnswer("deepset/roberta-base-squad2")
 app = Flask(__name__)
 
+documents = readAsJSON()
+print("---Start fitting json documents into bm25")
+passage_retriever.fit(documents)
+print("---Finish Fitting json documents into bm25")
+
 
 @app.route('/')
 def index():
@@ -27,9 +32,8 @@ def analyzer():
 
     # query = query_processor.generate_query(question)
 
-    documents = readAsJSON()
-    passage_retriever.fit(documents)
-    passages = passage_retriever.most_similar(question)
+
+    passages = passage_retriever.most_similar_passages(question)
     # passages = passage_retriever.findPassage(documents, question)
     answers = answer_extractor.extract(question, passages)
 

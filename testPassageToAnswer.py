@@ -1,5 +1,4 @@
 import os
-
 import spacy
 
 from components.PassageRetriever import PassageRetriever, readAsJSON
@@ -19,7 +18,7 @@ def testPassage():
     question = "what are problems with high dimensional data"
     documents = readAsJSON()
     passage_retriever.fit(documents)
-    passages = passage_retriever.most_similar(question)
+    passages = passage_retriever.most_similar_passages(question)
     print(passages)
     # answers = answer_extractor.extract(question, passages)
     # print(answers)

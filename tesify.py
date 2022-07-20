@@ -11,10 +11,10 @@ passage_retriever = PassageRetriever(nlp)
 
 
 def testPassage():
-    question = "STRIPS"
+    question = "What are the problems of high dimensional data"
     documents = readAsJSON()
     passage_retriever.fit(documents)
-    passages = passage_retriever.most_similar(question)
+    passages = passage_retriever.most_similar_passages(question)
     print(passages)
 
 

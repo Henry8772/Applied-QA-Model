@@ -8,7 +8,7 @@ from gensim.summarization.bm25 import BM25
 
 
 def readAsJSON():
-    with open('test_squad_accuracy.json', 'rb') as f:
+    with open('export.json', 'rb') as f:
         data = json.load(f)
 
     return data
@@ -31,7 +31,7 @@ class PassageRetriever:
         self.bm25 = BM25(corpus)
         self.passages = docs
 
-    def most_similar(self, question, topn=10):
+    def most_similar_passages(self, question, topn=3):
         tokens = self.tokenize(question)
         scores = self.bm25.get_scores(tokens)
         indices = argsort(scores)[-topn:]
@@ -43,6 +43,11 @@ class PassageRetriever:
 
         # related_passages = [ == scores[i] for i in range(len(indices))]
         return related_passage
+
+        # return indices
+
+    # def most_similiar_paragraphs(self, passges_index):
+
 
     # def findPassage(self, documents, question):
     #     # documents['question'] = question
